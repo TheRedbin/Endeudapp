@@ -23,7 +23,7 @@ function addTransaction(e) {
         const transaction = {
             id: generateID(),
             text: text.value,
-            amount: +amount.value
+            amount: parseFloat(amount.value.replace(/\./g, '').replace(',', '.'))
         };
 
         transactions.push(transaction);
@@ -105,6 +105,34 @@ function init() {
 
     transactions.forEach(addTransactionDOM);
     updateValues();
+}
+
+//decimales en input
+function formatoNumero(input) {
+    // Obtener el valor actual del input
+    let valor = input.value.replace(/\D/g, ''); // Eliminar caracteres que no sean dígitos
+
+    // Formatear el número
+    valor = formatearNumero(valor);
+    
+    // Agregar el signo menos si el número es negativo
+    if (input.value.includes('-')) {
+        valor = '-' + valor;
+    }
+    
+    // Asignar el valor formateado al input
+    input.value = valor;
+}
+
+
+function formatearNumero(amount) {
+    // Si el número es mayor o igual a 1000, formatearlo con separadores de miles
+    if (parseInt(amount) >= 1000) {
+        let numero = parseInt(amount); // Convertir a número
+        return numero.toLocaleString('es-CO'); // Utilizar formato de separadores de miles del navegador
+    } else {
+        return amount;
+    }
 }
 
 init();
