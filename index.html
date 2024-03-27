@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <title>Expense Tracker using JavaScript - @code.scientist x @codingtorque</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <h4>Balance</h4>
+        <h1 id="balance">$0.00</h1>
+
+        <div class="inc-exp-container">
+            <div>
+                <h4>ingresos</h4>
+                <p id="money-plus" class="money plus">+$0.00</p>
+            </div>
+            <div>
+                <h4>Egresos</h4>
+                <p id="money-minus" class="money minus">-$0.00</p>
+            </div>
+        </div>
+
+        <h3>Historial</h3>
+        <ul id="list" class="list">
+            <!-- List of income and expense  -->
+        </ul>
+
+        <h3>Agregar movimiento</h3>
+        <form id="form">
+            <div class="form-control">
+                <label for="text">Nombre</label>
+                <input type="text" id="text" placeholder="Enter name of transaction..." />
+            </div>
+            <div class="form-control">
+                <label for="amount">Monto <br />
+                </label>
+                <input type="text" id="amount" placeholder="Enter amount..." oninput="formatoNumero(this)"/>
+            </div>
+            <button class="btn">Add transaction</button>
+        </form>
+    </div>
+
+    <label for="numero">Número:</label>
+    <input type="text" id="numero" oninput="formatoNumero(this)">
+
+    <script>
+        function formatoNumero(input) {
+            // Obtener el valor actual del input
+            let valor = input.value.replace(/\D/g, ''); // Eliminar caracteres que no sean dígitos
+
+            // Formatear el número
+            valor = formatearNumero(valor);
+
+            // Asignar el valor formateado al input
+            input.value = valor;
+        }
+
+        function formatearNumero(amount) {
+            // Si el número es mayor o igual a 1000, formatearlo con separadores de miles
+            if (parseInt(amount) >= 1000) {
+                let parteEntera = parseInt(amount) + ''; // Convertir a cadena
+                let parteDecimal = ''; // Inicializar la parte decimal
+
+                // Separar la parte entera de la parte decimal
+                if (parteEntera.includes(',')) {
+                    [parteEntera, parteDecimal] = parteEntera.split(',');
+                    parteDecimal = ',' + parteDecimal;
+                }
+
+                // Agregar puntos de mil a la parte entera
+                parteEntera = parteEntera.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+                // Concatenar la parte entera y la parte decimal
+                return parteEntera + parteDecimal;
+            } else {
+                return amount;
+            }
+        }
+    </script>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
